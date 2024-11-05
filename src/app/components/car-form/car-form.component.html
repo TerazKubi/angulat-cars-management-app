@@ -1,0 +1,44 @@
+<!-- src/app/components/car-form/car-form.component.html -->
+
+
+<div class="car-form-container">
+    <h2>Add New Car</h2>
+    <form [formGroup]="carForm" (ngSubmit)="onSubmit()">
+        <table>
+            <tr>
+                <td><label for="brand">Brand</label></td>
+                <td><input id="brand" formControlName="brand" type="text" /></td>
+            </tr>
+            <tr>
+                <td><label for="model">Model</label></td>
+                <td><input id="model" formControlName="model" type="text" /></td>
+            </tr>
+            <tr>
+                <td><label for="year">Year</label></td>
+                <td><input id="year" formControlName="year" type="number" /></td>
+            </tr>
+            <tr>
+                <td><label for="vin">VIN</label></td>
+                <td><input id="vin" formControlName="vin" type="text" /></td>
+            </tr>
+            
+        </table>
+            
+        <div *ngIf="carForm.get('brand')?.invalid && carForm.get('brand')?.touched">
+            <small>Brand is required.</small>
+        </div>   
+        <div *ngIf="carForm.get('model')?.invalid && carForm.get('model')?.touched">
+            <small>Model is required.</small>
+        </div>
+        <div *ngIf="carForm.get('year')?.invalid && carForm.get('year')?.touched">
+            <small>Enter a valid year between 1886 and {{ currentYear }}.</small>
+        </div>
+        <div *ngIf="carForm.get('vin')?.invalid && carForm.get('vin')?.touched">
+            <small>VIN must be exactly 17 characters.</small>
+        </div>
+    
+        <br>
+        <button type="submit" [disabled]="carForm.invalid">{{ carId ? 'Edit car' : 'Add car' }}</button>
+    </form>
+</div>
+

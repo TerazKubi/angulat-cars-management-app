@@ -1,0 +1,43 @@
+<div class="car-list-container">
+    <div class="car-list-navbar">
+        <div class="div">
+            <h1>Car List</h1>
+
+        </div>
+        <div class="div">
+            <button (click)="goToAddCar()" class="new-car-button">Add New Car</button>
+
+        </div>
+    </div>
+    
+
+    <div class="cars-container">
+    
+        <div *ngFor="let car of cars" (click)="goToDeatails(car.id)" class="car-container" >
+            <div>
+
+                <img [src]="getImagePath(car)" alt="Car Image">
+            </div>
+            
+            <div class="car-container-car-info">
+                <div class="text-name">
+                    {{ car.brand }} {{ car.model }}
+                    
+                </div>
+                <div>
+                    <span class="year">{{ car.year }}</span>
+                </div>
+                
+            </div>
+            
+            <!-- <button (click)="goToDeatails(car.id)">View Details</button> -->
+            
+            
+            
+            <!-- <button (click)="deleteCar(car.id)">Delete</button> -->
+        </div>
+
+    </div>
+    
+    
+</div>

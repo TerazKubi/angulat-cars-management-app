@@ -1,0 +1,123 @@
+<div class="car-details-container">
+
+
+    
+    <div *ngIf="car; else noCarFound">
+      <div class="car-title">
+          <span>Car Details</span>
+          <div>
+              <button (click)="goToEditCar(car?.id)" class="button button-blue">EDIT</button>
+              <button (click)="deleteCar(car?.id)" class="button button-red">DELETE</button>
+          </div>
+          
+      </div>
+      <div class="car-container">
+        <div class="car-info-container">
+          <div class="car-info">
+            <table>
+              <tr><td><strong>Brand  </strong></td><td>{{ car.brand }}</td></tr>
+              <tr><td><strong>Model  </strong></td><td>{{ car.model }}</td></tr>
+              <tr><td><strong>Year  </strong></td><td>{{ car.year }}</td></tr>
+              <tr><td><strong>VIN  </strong></td><td>{{ car.vin }}</td></tr>
+            </table>
+  
+          </div>
+        
+          <div class="car-image-container">
+            <img [src]="getImagePath()" alt="Car Image">
+          </div>
+      </div>
+    </div>
+
+    <div>
+      <button (click)="toggleServiceForm()" class="add-service-button">
+        {{ showServiceForm ? 'Hide Service Form' : 'Add New Service' }}
+      </button>
+      
+    </div>
+    
+    <div *ngIf="showServiceForm" class="service-form-container">
+      <h3>Add Service Record</h3>
+      <form [formGroup]="serviceForm" (ngSubmit)="onSubmit()">
+        <label>
+          Service Date:
+          <input formControlName="date" type="date" />
+          <div *ngIf="serviceForm.get('date')?.invalid && serviceForm.get('date')?.touched">
+            Date is required.
+          </div>
+        </label>
+      
+        <div formArrayName="parts">
+          <div *ngFor="let part of parts.controls; let i = index">
+            <div [formGroupName]="i">
+              <label>
+                Part Name:
+                <input formControlName="name" />
+                <div *ngIf="part.get('name')?.invalid && part.get('name')?.touched">
+                  Part name is required.
+                </div>
+              </label>
+              <label>
+                Cost:
+                <input formControlName="cost" type="number" />
+                <div *ngIf="part.get('cost')?.invalid && part.get('cost')?.touched">
+                  Cost must be a positive number.
+                </div>
+              </label>
+              <button type="button" (click)="removePart(i)">Remove Part</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addPart()">Add Part</button>
+      
+        <button type="submit" [disabled]="serviceForm.invalid">
+          {{ editingServiceId ? 'Update Service' : 'Add Service' }}
+        </button>
+      </form>
+    </div>
+
+    <h3>Service Records</h3>
+    <div *ngIf="services && services.length > 0; else noServices">
+        
+        
+        <div *ngFor="let service of services">
+            <div class="service-container">
+              <div class="service-navbar">
+                <p><strong>{{ service.date }}</strong></p>
+                <div class="service-navbar-buttons">
+                  <button (click)="toggleServiceForm(service)" class="button button-blue">Edit</button>
+                  <button (click)="deleteService(service.id)" class="button button-red">Delete Service</button>
+                </div>
+                
+              </div>
+
+              <div class="parts-container">
+                <table class="parts-table">
+                    <tr><th>Part</th><th>Cost</th></tr>
+                    <tr *ngFor="let part of service.parts">
+                        <td>{{ part.name }}</td><td>{{ part.cost | currency }}</td>
+                    </tr>
+                </table>
+              </div>
+            </div>
+            
+          
+            
+        </div> 
+    </div>
+        
+    
+    
+
+  </div>
+        
+        
+</div>
+
+<ng-template #noServices>
+    <p>No service records available for this car.</p>
+</ng-template>
+
+<ng-template #noCarFound>
+  No car found with given id :(
+</ng-template>
