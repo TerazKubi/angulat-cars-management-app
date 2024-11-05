@@ -1,5 +1,9 @@
 # CarsApp
 
+
+![cars1](https://github.com/user-attachments/assets/61359338-95e8-425c-8952-48b236e315d4)
+![cars2](https://github.com/user-attachments/assets/e4a056ea-b4ae-4e3c-b378-d3b555a0f9cb)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.2.11.
 
 ## Development server
